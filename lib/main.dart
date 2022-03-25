@@ -65,7 +65,7 @@ class NewListPage extends StatefulWidget {
 class _NewListPageState extends State<NewListPage> {
   List<RssItem> rssItems = [];
 
-  void _refresh() async {
+  Future<void> _refresh() async {
     try {
       var _rssItems = await getRssItems(rssURL);
       setState(() {
@@ -105,10 +105,13 @@ class _NewListPageState extends State<NewListPage> {
         child: NavDrawer(),
       ),
       body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child:
-              ListView(shrinkWrap: true, children: _buildRssItems(rssItems))),
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: RefreshIndicator(
+            onRefresh: _refresh,
+            child:
+                ListView(shrinkWrap: true, children: _buildRssItems(rssItems))),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _refresh,
         tooltip: 'Refresh',
