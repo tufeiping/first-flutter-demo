@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webfeed/domain/rss_item.dart';
@@ -32,7 +30,7 @@ class NewsDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
+        // Here we take the value from the NewsDetailPage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text((_item == null ? "" : (_item as RssItem).title) as String),
       ),
@@ -47,6 +45,7 @@ class NewsDetailPage extends StatelessWidget {
             Text(
               (_item == null ? "" : (_item as RssItem).description) as String,
               style: fontStyle,
+              maxLines: 30,
             ),
             Align(
               alignment: Alignment.centerRight,

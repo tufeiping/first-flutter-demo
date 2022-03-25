@@ -1,16 +1,18 @@
 import 'package:first_flutter/detialpage.dart';
+import 'package:first_flutter/login.dart';
+import 'package:first_flutter/nav/navdrawer.dart';
 import 'package:first_flutter/utils/index.dart';
+import 'package:first_flutter/utils/receiver.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webfeed/webfeed.dart';
-
-import 'package:first_flutter/nav/navdrawer.dart';
-import 'package:first_flutter/utils/receiver.dart';
 
 const String rssURL = 'https://www.chinanews.com.cn/rss/scroll-news.xml';
 const String navTitle = '中国新闻网';
 const String appTitle = navTitle + '客户端';
 
 void main() {
+  if (!kIsWeb) {}
   runApp(const MyNewsApp());
 }
 
@@ -21,21 +23,24 @@ class MyNewsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: appTitle,
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const NewListPage(title: navTitle),
-    );
+        title: appTitle,
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        // home: const NewListPage(title: navTitle),
+        routes: {
+          '/': (context) => MyLogin(navTitle),
+          '/main': (context) => NewListPage(title: navTitle),
+        });
   }
 }
 
@@ -102,7 +107,8 @@ class _NewListPageState extends State<NewListPage> {
       body: Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
-          child: ListView(children: _buildRssItems(rssItems))),
+          child:
+              ListView(shrinkWrap: true, children: _buildRssItems(rssItems))),
       floatingActionButton: FloatingActionButton(
         onPressed: _refresh,
         tooltip: 'Refresh',
@@ -115,7 +121,7 @@ class _NewListPageState extends State<NewListPage> {
     List<Widget> result = [];
     result = items
         .map((e) {
-          var widget = ListTile(
+          return ListTile(
               leading: const Icon(Icons.add_road_sharp),
               title: Text(safeString(e.title)),
               onTap: () {
@@ -123,8 +129,7 @@ class _NewListPageState extends State<NewListPage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => NewsDetailPage(item: e)));
-              });
-          return widget as Widget;
+              }) as Widget;
         })
         .cast<Widget>()
         .toList();
