@@ -1,10 +1,40 @@
 # first_flutter
 
-A new Flutter project.
+My fist Flutter learn demo.
 
 ## Getting Started
 
 This project is a starting point for a Flutter application.
+
+### build step
+
+- Clone Repo
+
+~~~bash
+git clone https://github.com/tufeiping/first-flutter-demo.git
+~~~
+
+- cd first-flutter-demo
+
+- pull dependencies
+
+~~~bash
+flutter pub get
+~~~
+
+- debug run in chrome
+
+~~~bash
+flutter run -d chrome
+~~~
+
+- build target apk or windows
+
+~~~bash
+flutter build apk
+
+flutter build windows
+~~~
 
 A few resources to get you started if this is your first Flutter project:
 

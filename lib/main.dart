@@ -122,7 +122,7 @@ class _NewListPageState extends State<NewListPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DetailPage(item: e)));
+                        builder: (context) => NewsDetailPage(item: e)));
               });
           return widget as Widget;
         })
